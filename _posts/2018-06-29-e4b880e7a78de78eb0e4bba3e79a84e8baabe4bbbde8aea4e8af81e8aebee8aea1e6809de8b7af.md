@@ -7,9 +7,10 @@ layout: post
 permalink: 'http://www.forgerockcn.com/2018/06/29/%e4%b8%80%e7%a7%8d%e7%8e%b0%e4%bb%a3%e7%9a%84%e8%ba%ab%e4%bb%bd%e8%ae%a4%e8%af%81%e8%ae%be%e8%ae%a1%e6%80%9d%e8%b7%af/'
 published: true
 post_date: 2018-06-29 10:11:48
-tags: [ ]
+tags:
+  - MFA OTP token 令牌
 categories:
-  - Uncategorized
+  - IAM
 ---
 # 一种现代的身份认证设计思路
 
