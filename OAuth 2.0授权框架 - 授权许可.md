@@ -220,8 +220,10 @@ categories: IAM
 1.  [ForgeRock - OAuth 2.0 Guide][3]
 
  [1]: https://tools.ietf.org/html/rfc6749
- [2]: https://legacy.gitbook.com/book/yisiqi/the-oauth-2-0-authorization-framework/details[/fusion_text][/fusion_builder_column][/fusion_builder_row][/fusion_builder_container]
+ [2]: https://legacy.gitbook.com/book/yisiqi/the-oauth-2-0-authorization-framework/details
  [3]: https://backstage.forgerock.com/docs/am/6/oauth2-guide/#chap-oauth2-introduction
+ 
+[/fusion_text][/fusion_builder_column][/fusion_builder_row][/fusion_builder_container]
  
 
 
