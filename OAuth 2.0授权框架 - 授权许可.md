@@ -1,5 +1,6 @@
 ---
-post_title: OAuth 2.0授权框架 - 授权许可 - testing
+post_title: 'OAuth 2.0授权框架 - 授权许可'
+author: Bin Yang
 layout: post
 published: true
 categories: IAM 
