@@ -1,0 +1,78 @@
+---
+post_title: 'OAuth 2.0授权框架 - 客户端注册'
+author: Andrew
+layout: post
+published: true
+tags:
+  - OAuth
+categories:
+  - IAM
+---
+[fusion_builder_container hundred_percent="no" equal_height_columns="no" menu_anchor="" hide_on_mobile="small-visibility,medium-visibility,large-visibility" class="" id="" background_color="" background_image="" background_position="center center" background_repeat="no-repeat" fade="no" background_parallax="none" parallax_speed="0.3" video_mp4="" video_webm="" video_ogv="" video_url="" video_aspect_ratio="16:9" video_loop="yes" video_mute="yes" overlay_color="" video_preview_image="" border_size="" border_color="" border_style="solid" padding_top="" padding_bottom="" padding_left="" padding_right=""][fusion_builder_row][fusion_builder_column type="1_1" layout="1_1" background_position="left top" background_color="" border_size="" border_color="" border_style="solid" border_position="all" spacing="yes" background_image="" background_repeat="no-repeat" padding_top="" padding_right="" padding_bottom="" padding_left="" margin_top="0px" margin_bottom="0px" class="" id="" animation_type="" animation_speed="0.3" animation_direction="left" hide_on_mobile="small-visibility,medium-visibility,large-visibility" center_content="no" last="no" min_height="" hover_type="none" link=""][fusion_text]
+
+# OAuth 2.0授权框架 - 客户端注册
+
+## 客户端注册 (Client Registration)
+
+在协议开始前，客户端要和授权服务器进行注册，通常会涉及到最终用户与HTML注册表单的交互。
+
+客户端注册不要求客户端与授权服务器之间的直接交互。在授权服务器支持时，注册可以依靠其他方式来建立信任关系并获取客户端的属性（如重定向URI、客户端类型）。
+
+当注册客户端时，客户端开发者应该：
+
+* 指定客户端类型
+* 提供客户端重定向URI
+* 包含授权服务器要求的任何其他信息（如，应用名称、网址、描述、Logo图片、接受法律条款等）
+
+
+## 客户端类型
+根据客户端与授权服务器进行安全地验证的能力（即维护客户端凭据机密性的能力），OAuth定义了两种客户端类型：
+
+#### 机密客户端 (confidential)
+* 能够维持其凭据机密性（如客户端执行在具有对客户端凭据有限访问权限的安全的服务器上），或者能够使用其他方式保证客户端身份验证的安全性。
+
+#### 公开客户端 (public)
+* 不能够维持其凭据的机密性（如客户端执行在由资源所有者使用的设备上，例如已安装的本地应用程序或基于Web浏览器的应用），且不能通过其他方式保证客户端身份验证的安全性。 
+
+**客户端类型的选择基于授权服务器的安全身份认证定义以及其对客户端凭据可接受的暴露程度。授权服务器不应该对客户端类型做假设。**
+
+客户端可以以分布式的组件集合实现，每一个组件具有不同的客户端类型和安全上下文（例如，一个同时具有机密的基于服务器的组件和公开的基于浏览器的组件的分布式客户端）。如果授权服务器不提供对这类客户端的支持，或不提供其注册方面的指导，客户端应该注册每个组件为一个单独的客户端。 本规范围绕下列客户端配置设计：
+
+#### Web应用程序 （web application）
+* Web应用是一个运行在Web服务器上的**机密客户端**。资源所有者通过其使用的设备上的用户代理里渲染的HTML用户界面访问客户端。客户端凭据以及向客户端颁发的任何访问令牌都存储在Web服务器上且不会暴露给资源所有者或者被资源所有者可访问。
+
+#### 基于用户代理的应用 （user-agent-based application）
+* 基于用户代理的应用是一个**公开客户端**，客户端的代码从Web服务器下载，并在资源所有者使用的设备上的用户代理（如Web浏览器）中执行。协议数据和凭据对于资源所有者是可轻易访问的。由于这些应用驻留在用户代理内，在请求授权时它们可以无缝地使用用户代理的功能。
+
+#### 本机应用程序 （native application）
+* 本机应用是一个安装、运行在资源所有者使用的设备上的**公开客户端**。协议数据和凭据对于资源所有者是可访问的。
+
+## 客户端标识 （Client Identifier）
+由授权服务器颁发给已注册客户端的一个代表客户端注册信息的唯一字符串。客户端标识不是一个秘密，它暴露给资源所有者并且不能单独用于客户端身份验证。客户端标识对于授权服务器是唯一的。
+
+
+## 客户端身份验证 （Client Authentication）
+如果**机密客户端**和授权服务器建立了适合于授权服务器的安全性要求的客户端身份验证方法，授权服务器便可以接受符合其安全要求的任何形式的客户端身份验证。机密客户端通常颁发一组客户端凭据用于与授权服务器进行身份验证（例如，密码、公/私钥对）。
+
+授权服务器可以与**公共客户端**建立客户端身份验证方法。然而，授权服务器不能依靠公共客户端身份验证达到识别客户端的目的。
+
+客户端在每次请求中不能使用一个以上的身份验证方法。
+
+
+#### 客户端密码
+拥有客户端密码的客户端可以使用HTTP基本身份验证方案（HTTP Basic authentication scheme，定义于RFC2617）与授权服务器进行身份验证。客户端标识使用“application/x-www-form-urlencoded”算法编码，编码后的值用作用户名；客户端密码使用相同的算法编码并用作密码。授权服务器必须支持HTTP基本身份验证方案，用于验证客户端的身份。
+
+当使用密码身份验证发送请求时，授权服务器必须要求使用TLS。
+
+## 参考资料
+
+1.  [RFC6749 - The OAuth 2.0 Authorization Framework][1] 
+2.  [OAuth 2.0 授权框架][2]
+    
+
+ [1]: https://tools.ietf.org/html/rfc6749
+ [2]: https://legacy.gitbook.com/book/yisiqi/the-oauth-2-0-authorization-framework/details
+
+
+ 
+[/fusion_text][/fusion_builder_column][/fusion_builder_row][/fusion_builder_container]
